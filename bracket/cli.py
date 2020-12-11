@@ -1,3 +1,5 @@
+# Command
+
 import click
 import shutil
 import os
@@ -12,7 +14,7 @@ def nowpath(path):
 @click.group()
 def cg():
     """
-    # Bracket
+    ## Bracket
 
     **Bracket** is an elegant web user interface rendering tool
 
@@ -36,3 +38,8 @@ def create(name):
     click.echo("> cd ./" + name)
     click.echo("> python serve.py")
     click.echo("")
+
+cg.add_command(create)
+
+if __name__ == "__main__":
+    cg()
