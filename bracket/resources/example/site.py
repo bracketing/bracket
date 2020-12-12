@@ -1,7 +1,7 @@
 from bracket import Bracket
 
-from .pages import (index)
+from pages import (index)
 
 app = Bracket(__name__)
 
-app.install(index.helloworld)
+app.install(index)
