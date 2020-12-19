@@ -1,7 +1,5 @@
 # Bracket
 
-<img align="right" src=artwork/20201210_224523_0000.png height="150px">
-
 **Bracket** is an Elegant static site generator.
 
 ## Example
