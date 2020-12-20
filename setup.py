@@ -1,11 +1,17 @@
 import setuptools
 import re
 
-with open("README.md", "r", encoding="utf-8") as fh:
-    long_description = fh.read()
+try:
+    with open("README.md", "r", encoding="utf-8") as fh:
+        long_description = fh.read()
+except:
+    long_description = ""
 
-with open("bracket/__init__.py", encoding="utf8") as f:
-    version = re.search(r'__version__ = "(.*?)"', f.read()).group(1)
+try:
+    with open("bracket/__init__.py", encoding="utf8") as f:
+        version = re.search(r'__version__ = "(.*?)"', f.read()).group(1)
+except:
+    version="in test"
 
 setuptools.setup(
     name="bracket",
