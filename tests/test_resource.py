@@ -9,3 +9,4 @@ def test_app_resource():
         return static([])
 
     return app
+    

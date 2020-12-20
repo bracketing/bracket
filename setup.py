@@ -1,17 +1,11 @@
 import setuptools
 import re
 
-try:
-    with open("README.md", "r", encoding="utf-8") as fh:
-        long_description = fh.read()
-except:
-    long_description = ""
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
 
-try:
-    with open("bracket/__init__.py", encoding="utf8") as f:
-        version = re.search(r'__version__ = "(.*?)"', f.read()).group(1)
-except:
-    version="in test"
+with open("bracket/__init__.py", encoding="utf8") as f:
+    version = re.search(r'__version__ = "(.*?)"', f.read()).group(1)
 
 setuptools.setup(
     name="bracket",
@@ -32,5 +26,6 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ]
+
 
 )
