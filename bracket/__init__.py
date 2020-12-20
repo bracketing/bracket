@@ -9,4 +9,11 @@
     :license: MIT License, see LICENSE for more details.
 """
 
+from .app import WebSite
+
 __version__ = "0.0.1"
+
+__all__ = [
+    "WebSite",
+    "__version__"
+]

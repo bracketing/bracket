@@ -27,6 +27,19 @@ class WebSite(object):
             "viewfunc":viewfunc
         })
     
-    def add_resource(self,filename,content):
-        if not ("." in filename):
-            raise ValueError('''The file name must contain "."''')
+    def add_resource(self,func):
+        self.resources_list.append(func)
+    
+    def pages(self, rule):
+        def decorator(f):
+            self.add_page(rule=rule,viewfunc=f)
+            return f
+
+        return decorator
+    
+    def resources(self):
+        def decorator(f):
+            self.add_resource(func=f)
+            return f
+
+        return decorator
