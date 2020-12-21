@@ -4,7 +4,7 @@ import re
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-with open("bracket/__init__.py", encoding="utf8") as f:
+with open("bracket/info.py", encoding="utf8") as f:
     version = re.search(r'__version__ = "(.*?)"', f.read()).group(1)
 
 setuptools.setup(
