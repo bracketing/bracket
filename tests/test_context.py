@@ -15,5 +15,4 @@ def test_context_pages():
         }
     })
     
-    print(context.render())
     return context

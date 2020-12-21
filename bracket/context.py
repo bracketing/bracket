@@ -27,12 +27,34 @@ class PagesContext(object):
         if not isinstance(objdict["content"], Template):
             raise TypeError("The content must be a jinja2.Template.")
 
-        self.objdict = objdict
+        self.objdict = self.checkObjDict(objdict)
+
         self.title = objdict["title"]
         self.content = objdict["content"]
-        self.headermeta = ""
-        self.lang="zh-CN"
-        
+        self.headermeta = objdict["ui"]["headermeta"]
+        self.lang = objdict["ui"]["lang"]
+    
+    def checkObjDict(self,objdict):
+        checkitems = {
+            "headermeta":"",
+            "lang":"zh-CN",
+            "description":"A simple pages",
+            "keywords":"bracket,web,page",
+            "author":"user"
+        }
+
+        try:
+            objdict["ui"]
+        except:
+            objdict["ui"] = {}
+
+        for itemsname, itemsvalue in checkitems.items():
+            try:
+                objdict["ui"][itemsname]
+            except:
+                objdict["ui"][itemsname] = itemsvalue
+
+        return objdict
 
     def generateContext(self):
         return {
