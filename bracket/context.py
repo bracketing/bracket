@@ -9,6 +9,7 @@
     :license: MIT License, see LICENSE for more details.
 """
 from jinja2 import Template
+from .pages import getSimplePages
 from .info import __version__
 
 
@@ -29,6 +30,9 @@ class PagesContext(object):
         self.objdict = objdict
         self.title = objdict["title"]
         self.content = objdict["content"]
+        self.headermeta = ""
+        self.lang="zh-CN"
+        
 
     def generateContext(self):
         return {
@@ -39,9 +43,18 @@ class PagesContext(object):
             "i18n":None
         }
     
-    def render(self):
+    def render(self,template=getSimplePages):
         dispatch = self.content.render(self.generateContext())
-        return str(dispatch)
+
+        objdict = {
+            "title":self.title,
+            "headermeta":self.headermeta,
+            "lang":self.lang,
+            "content":dispatch,
+            "bracketVersion":__version__
+        }
+
+        return str(template(objdict))
 
 
 

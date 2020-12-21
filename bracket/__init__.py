@@ -11,12 +11,14 @@
 
 from .app import WebSite
 from .context import PagesContext
+from .pages import getSimplePages
+
+from .info import __version__
 
 
 __all__ = [
     "WebSite",
     "PagesContext",
+    "getSimplePages"
     "__version__"
 ]
-
-__version__ = "0.0.1"
