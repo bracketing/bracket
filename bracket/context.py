@@ -27,14 +27,14 @@ class PagesContext(object):
         if not isinstance(objdict["content"], Template):
             raise TypeError("The content must be a jinja2.Template.")
 
-        self.objdict = self.checkObjDict(objdict)
+        self.objdict = self.checkUIObjDict(objdict)
 
         self.title = objdict["title"]
         self.content = objdict["content"]
         self.headermeta = objdict["ui"]["headermeta"]
         self.lang = objdict["ui"]["lang"]
     
-    def checkObjDict(self,objdict):
+    def checkUIObjDict(self,objdict):
         checkitems = {
             "headermeta":"",
             "lang":"zh-CN",
@@ -57,14 +57,33 @@ class PagesContext(object):
         return objdict
 
     def generateContext(self):
-        return {
+        try:
+            res = self.objdict["resources"]
+        except:
+            res = {}
+
+        context = {
             "bracket": RenderContext({
                 "version": str(__version__),
                 "title": self.objdict["title"]
             }),
             "i18n":None
         }
-    
+
+        for obj,value in res.items():
+            i = False
+            try:
+                context[obj]
+                i = True
+            except:
+                i = False
+            if i:
+                raise ValueError("Resource name is same.")
+            context[obj] = value
+
+        return context
+
+
     def render(self,template=getSimplePages):
         dispatch = self.content.render(self.generateContext())
 
