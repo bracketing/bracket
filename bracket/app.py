@@ -66,7 +66,7 @@ class WebSite(object):
         except:
             raise RuntimeError("Flask is not installed.")
         
-        app = flask.Flask("Bracket")
+        app = flask.Flask("Bracket",static_url_path="/static")
         
         @app.route("/",methods=["GET","POST"])
         def indexhandler():

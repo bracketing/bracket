@@ -104,11 +104,11 @@ class RenderContext(object):
         for attr, value in attribute.items():
             setattr(self, attr, value)
 
-    def res(self,url,file_type=None):
-        return "/static/" + url
+    def res(self,url:str,file_type=None):
+        if not url.startswith("/"):
+            raise ValueError("The resource name must start with a forward slash.")
 
-    def find(self,filepath):
-        return 0
+        return "/static" + url
     
     def url(self,url):
         return 0
