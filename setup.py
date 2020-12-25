@@ -10,6 +10,7 @@ with open("bracket/info.py", encoding="utf8") as f:
 setuptools.setup(
     name="bracket",
     version=version,
+    packages=setuptools.find_packages(),
     author="Ceorleorn",
     author_email="snbck@qq.com",
     description="Bracket is an Elegant static site generator.",
