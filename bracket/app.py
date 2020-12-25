@@ -9,6 +9,7 @@
     :license: MIT License, see LICENSE for more details.
 """
 from .context import PagesContext
+from .debug import serve as debug
 import importlib
 
 class WebSite(object):
@@ -45,6 +46,9 @@ class WebSite(object):
 
         return decorator
     
+    def generatePagesContext(self):
+        pass
+    
     def dispatch(self,route):
         for obj in self.pages_list:
             if obj["rule"] == route:
@@ -61,27 +65,7 @@ class WebSite(object):
     def serve(self,serveconfig={
         "port":5000
     }):
-        try:
-            flask = importlib.import_module("flask")
-        except:
-            raise RuntimeError("Flask is not installed.")
-        
-        app = flask.Flask("Bracket",static_url_path="/static")
-        
-        @app.route("/",methods=["GET","POST"])
-        def indexhandler():
-            dispatch = self.dispatch("/")
-            if not (dispatch == None):
-                return dispatch
-            else:
-                return flask.abort(404)
 
-        @app.route("/<url>",methods=["GET","POST"])
-        def otherurlhandler(url):
-            dispatch = self.dispatch("/" + url)
-            if not (dispatch == None):
-                return dispatch
-            else:
-                return flask.abort(404)
+        debug(self,serveconfig)
+
         
-        app.run(port=serveconfig["port"])

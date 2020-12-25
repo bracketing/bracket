@@ -78,7 +78,7 @@ class PagesContext(object):
             except:
                 i = False
             if i:
-                raise ValueError("Resource name is same.")
+                raise NameError("Resource name is same.")
             context[obj] = value
 
         return context
@@ -106,9 +106,31 @@ class RenderContext(object):
 
     def res(self,url:str,file_type=None):
         if not url.startswith("/"):
-            raise ValueError("The resource name must start with a forward slash.")
+            raise NameError("The resource name must start with a forward slash.")
 
         return "/static" + url
     
     def url(self,url):
         return 0
+
+class ResourcesContext(object):
+    def __init__(self,install_resources):
+        self.install_resources = install_resources
+    
+    def install(self,name,resources):
+        if not self.isInstalled(name):
+            self.add(name,resources)
+        else:
+            raise NameError("Resource name is same.")
+    
+    def add(self,name,resources):
+        self.install_resources[name] = resources
+    
+    def isInstalled(self,name):
+        i = False
+        try:
+            self.install_resources[name]
+            i = True
+        except:
+            i = False
+        return i
