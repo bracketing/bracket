@@ -14,6 +14,7 @@ $ pip install bracket
 
 ``` python
 from bracket import WebSite
+from jinja2 import Template
 
 app = WebSite(__name__)
 
