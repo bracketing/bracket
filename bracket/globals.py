@@ -8,20 +8,13 @@
     :copyright: (c) 2020 by Ceorleorn(https://github.com/ceorleorn).
     :license: MIT License, see LICENSE for more details.
 """
-
-from .app import WebSite
+from werkzeug.local import Local, LocalProxy
 from .context import PagesContext
-from .pages import getSimplePages
-
-from .globals import pages
-from .globals import resources
-
-from .info import __version__
 
 
-__all__ = [
-    "WebSite",
-    "PagesContext",
-    "getSimplePages"
-    "__version__"
-]
+l = Local()
+
+
+# All Context
+pages = PagesContext
+resources = LocalProxy(l, 'resources')
