@@ -1,16 +1,16 @@
-## 🎊 Bracket is with Jinja
-
-![PyPI](https://img.shields.io/pypi/v/bracket) ![PyPI - Downloads](https://img.shields.io/pypi/dm/bracket)
+# Bracket
 
 **Bracket** is an Elegant static site generator. It encapsulates **[Jinja2](https://github.com/pallets/jinja)**. Its biggest highlight is to render the static pages in the form of **view function**, and support real-time **debugging**. It can also support **CSS framework**, **international routing** and more functions through ecological extension.
 
-### Install 
+## Installing
+
+Install and update using [pip](pypi.org):
 
 ``` bash
 $ pip install bracket
 ```
 
-### Example
+## A Simple Example
 
 ``` python
 from bracket import WebSite
@@ -32,9 +32,6 @@ def helloworld(context):
 
 app.dispatch("/")
 ```
-
-They render:
-
 ``` html
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -56,6 +53,18 @@ They render:
 </html>
 ```
 
-#### License
+## Contributing
 
-**MIT** 
+How to contribute to this project, report problems, and build a development environment, please refer to the [contribution guide]()
+
+## Links
+
+* Website: https://bracket.ink
+* Documentation: https://bracket.ink/docs/
+* Releases: https://pypi.org/project/bracket/
+* Code: https://github.com/bracketing/bracket
+* Issue tracker: https://github.com/bracketing/bracket/issues
+
+## License
+
+The project is open source under MIT license in [GitHub Community](https://github.com). No one is allowed to infringe the copyright. Please follow `LICENSE`
