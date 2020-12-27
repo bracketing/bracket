@@ -7,6 +7,8 @@ def test_app_resource():
 
     @app.resources()
     def resources(static):
-        return static([])
+        return static([
+            {"filename":"link.txt","content":"bracket.ink"}
+        ])
 
     return app
