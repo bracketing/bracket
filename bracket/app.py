@@ -22,6 +22,7 @@ class WebSite(object):
 
         self.pages_list = []
         self.resources_list = []
+        self.extensions_list = []
 
         self.config = Configs()
         self.config_default = default_configs
@@ -102,3 +103,15 @@ class WebSite(object):
                 file.write(str(static))
 
             print("Every thing was Ok.")
+
+    def loader_extension(self,extension):
+        if not isinstance(extension,object):
+            raise TypeError("Extension must be a object.")
+
+        if not hasattr(extension,"modules"):
+            raise TypeError("Missing attribute: modules.")
+
+        if not isinstance(extension.moduels,dict):
+            raise TypeError("Modules must be a dict.")
+
+        self.extensions_list.append(extension)
