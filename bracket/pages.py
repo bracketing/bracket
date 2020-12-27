@@ -11,7 +11,7 @@
 
 from jinja2 import Template
 
-simpleTemplate = '''<!DOCTYPE html>
+simpleTemplate = """<!DOCTYPE html>
 <html lang="{{ objdict['lang'] }}">
 <head>
     <meta charset="UTF-8">
@@ -25,10 +25,9 @@ simpleTemplate = '''<!DOCTYPE html>
         {{ objdict['content'] }}
     </div>
 </body>
-</html>'''
+</html>"""
+
 
 def getSimplePages(objdict):
-    dispatch = Template(simpleTemplate).render({
-        "objdict":objdict
-    })
+    dispatch = Template(simpleTemplate).render({"objdict": objdict})
     return dispatch

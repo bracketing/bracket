@@ -33,14 +33,14 @@ class PagesContext(object):
         self.content = objdict["content"]
         self.headermeta = objdict["ui"]["headermeta"]
         self.lang = objdict["ui"]["lang"]
-    
-    def checkUIObjDict(self,objdict):
+
+    def checkUIObjDict(self, objdict):
         checkitems = {
-            "headermeta":"",
-            "lang":"zh-CN",
-            "description":"A simple pages",
-            "keywords":"bracket,web,page",
-            "author":"user"
+            "headermeta": "",
+            "lang": "zh-CN",
+            "description": "A simple pages",
+            "keywords": "bracket,web,page",
+            "author": "user",
         }
 
         try:
@@ -63,14 +63,13 @@ class PagesContext(object):
             res = {}
 
         context = {
-            "bracket": RenderContext({
-                "version": str(__version__),
-                "title": self.objdict["title"]
-            }),
-            "i18n":None
+            "bracket": RenderContext(
+                {"version": str(__version__), "title": self.objdict["title"]}
+            ),
+            "i18n": None,
         }
 
-        for obj,value in res.items():
+        for obj, value in res.items():
             i = False
             try:
                 context[obj]
@@ -83,20 +82,18 @@ class PagesContext(object):
 
         return context
 
-
-    def render(self,template=getSimplePages):
+    def render(self, template=getSimplePages):
         dispatch = self.content.render(self.generateContext())
 
         objdict = {
-            "title":self.title,
-            "headermeta":self.headermeta,
-            "lang":self.lang,
-            "content":dispatch,
-            "bracketVersion":__version__
+            "title": self.title,
+            "headermeta": self.headermeta,
+            "lang": self.lang,
+            "content": dispatch,
+            "bracketVersion": __version__,
         }
 
         return str(template(objdict))
-
 
 
 class RenderContext(object):
@@ -104,29 +101,30 @@ class RenderContext(object):
         for attr, value in attribute.items():
             setattr(self, attr, value)
 
-    def res(self,url:str,file_type=None):
+    def res(self, url: str, file_type=None):
         if not url.startswith("/"):
             raise NameError("The resource name must start with a forward slash.")
 
         return "/static" + url
-    
-    def url(self,url):
+
+    def url(self, url):
         return 0
 
+
 class ResourcesContext(object):
-    def __init__(self,install_resources):
+    def __init__(self, install_resources):
         self.install_resources = install_resources
-    
-    def install(self,name,resources):
+
+    def install(self, name, resources):
         if not self.isInstalled(name):
-            self.add(name,resources)
+            self.add(name, resources)
         else:
             raise NameError("Resource name is same.")
-    
-    def add(self,name,resources):
+
+    def add(self, name, resources):
         self.install_resources[name] = resources
-    
-    def isInstalled(self,name):
+
+    def isInstalled(self, name):
         i = False
         try:
             self.install_resources[name]

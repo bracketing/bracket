@@ -19,9 +19,4 @@ from .globals import resources
 from .info import __version__
 
 
-__all__ = [
-    "WebSite",
-    "PagesContext",
-    "getSimplePages"
-    "__version__"
-]
+__all__ = ["WebSite", "PagesContext", "getSimplePages" "__version__"]
