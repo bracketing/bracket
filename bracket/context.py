@@ -111,7 +111,7 @@ class RenderContext(object):
         return 0
 
 
-class ResourcesContext(object):
+class StaticContext(object):
     def __init__(self, install_resources):
         self.install_resources = install_resources
 
