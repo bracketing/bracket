@@ -8,7 +8,7 @@
     :copyright: (c) 2020 by Ceorleorn(https://github.com/ceorleorn).
     :license: MIT License, see LICENSE for more details.
 """
-from .context import PagesContext
+from .context import PagesContext, StaticContext
 from .configs import Configs, default_configs
 from .debug import serve as debug
 import importlib
@@ -56,7 +56,7 @@ class WebSite(object):
 
         app.add_page("/",hello)
         ===================================
-        
+
         """
         if not rule.startswith("/"):
             raise NameError("The route must start with a forward slash.")
@@ -78,7 +78,7 @@ class WebSite(object):
 
         app.add_resources("/",hello)
         ===================================
-        
+
         """
         self.resources_list.append(func)
 
@@ -101,8 +101,9 @@ class WebSite(object):
             })
 
         ===================================
-        
+
         """
+
         def decorator(f):
             self.add_page(rule=rule, viewfunc=f)
             return f
@@ -124,8 +125,9 @@ class WebSite(object):
             return static([])
 
         ===================================
-        
+
         """
+
         def decorator(f):
             self.add_resource(func=f)
             return f
@@ -149,7 +151,7 @@ class WebSite(object):
                 "content":Template('''<h1>Hello</h1>'''),
                 "resources":{}
             })
-        
+
         app.dispatch("/")
 
         ===================================
@@ -164,7 +166,7 @@ class WebSite(object):
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta name="generator" content="Bracket (0.0.1) & Jinja2 ">
-    
+
             <title>Welcome!!!</title>
         </head>
         <body>
@@ -175,7 +177,7 @@ class WebSite(object):
         </html>
 
         ===================================
-        
+
         """
         dispatchs = None
 
@@ -208,7 +210,7 @@ class WebSite(object):
                 "content":Template('''<h1>Hello</h1>'''),
                 "resources":{}
             })
-        
+
         app.serve()
 
         ===================================
@@ -226,7 +228,7 @@ class WebSite(object):
           * Running on http://localhost:5000/ (Press CTRL+C to quit)
 
         ===================================
-        
+
         """
         if not serveconfig:
             serveconfig = {
@@ -247,13 +249,13 @@ class WebSite(object):
         app = WebSite(__name__)
 
         app.escape("/")
-        >>> u"/index.html"
+        >>> "/index.html"
 
         app.escape("/hello")
-        >>> u"/hello.html"
+        >>> "/hello.html"
 
         ===================================
-        
+
         """
         if not url.startswith("/"):
             raise NameError("The url must start with a forward slash.")
@@ -261,7 +263,7 @@ class WebSite(object):
         if url == "/":
             url = "/index"
 
-        return str(url + ".html").encode("utf-8")
+        return str(url + ".html")
 
     def build(self):
         """
@@ -280,7 +282,7 @@ class WebSite(object):
                 "content":Template('''<h1>Hello</h1>'''),
                 "resources":{}
             })
-        
+
         app.build()
 
         ===================================
@@ -299,7 +301,7 @@ class WebSite(object):
         >>>index.html
 
         ===================================
-        
+
         """
         print("Building Staticfile with you ...\n")
 
@@ -320,7 +322,7 @@ class WebSite(object):
 
             print("Every thing was Ok.")
 
-    def loader_extension(self,extension):
+    def loader_extension(self, extension):
         """
         Load extension object.
 
@@ -341,13 +343,39 @@ class WebSite(object):
         ===================================
 
         """
-        if not isinstance(extension,object):
+        if not isinstance(extension, object):
             raise TypeError("Extension must be a object.")
 
-        if not hasattr(extension,"modules"):
+        if not hasattr(extension, "modules"):
             raise TypeError("Missing attribute: modules.")
 
-        if not isinstance(extension.moduels,dict):
+        if not isinstance(extension.moduels, dict):
             raise TypeError("Modules must be a dict.")
 
         self.extensions_list.append(extension)
+
+    def loader_resources(self):
+        """
+        Load all static resources that have been added
+
+        ===================================
+        from bracket import WebSite
+
+        app = WebSite(__name__)
+
+        @app.resources("/")
+        def hello(static):
+            return static([
+                {"filename":"link.txt","content":"bracket.ink"}
+            ])
+
+        app.loader_resources()
+        ===================================
+
+        """
+        resources = []
+        for loaderfunc in self.resources_list:
+            dispatch = loaderfunc(StaticContext)
+            for resource in dispatch:
+                resources.append(resource)
+        return resources
