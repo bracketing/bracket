@@ -317,6 +317,11 @@ class WebSite(object):
 
             filepath = self.config.get("BUILD_OUTPUTDIR") + self.escape(view["rule"])
 
+            try:
+                os.mkdir(os.path.dirname(filepath))
+            except:
+                pass
+            
             with open(filepath, "w+", encoding="utf-8") as file:
                 file.write(str(static))
 

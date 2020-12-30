@@ -20,5 +20,35 @@ def test_app_route():
                 "resources": {"messages": "Welcome to Bracket"},
             }
         )
+    
+    @app.pages("/hello")
+    def helloworld2(context):
+        return context(
+            {
+                "title": "Welcome to Bracket",
+                "content": Template(
+                    """
+            <h1>{{ messages }}</h1>
+            <img src="{{ bracket.res('/logo.png')}}">
+        """
+                ),
+                "resources": {"messages": "Welcome to Bracket"},
+            }
+        )
+
+    @app.pages("/hello/index")
+    def helloworld3(context):
+        return context(
+            {
+                "title": "Welcome to Bracket",
+                "content": Template(
+                    """
+            <h1>{{ messages }}</h1>
+            <img src="{{ bracket.res('/logo.png')}}">
+        """
+                ),
+                "resources": {"messages": "Welcome to Bracket"},
+            }
+        )
 
     return app
