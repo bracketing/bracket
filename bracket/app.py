@@ -344,7 +344,7 @@ class WebSite(object):
 
         print("Every thing was Ok.")
 
-    def loader_extension(self, extension):
+    def loader_extension(self, Extension):
         """
         Load extension object.
 
@@ -353,8 +353,8 @@ class WebSite(object):
 
         class Extension(object):
             def __init__(self,configs):
+                self.__name__ = "example"
                 self.configs = configs
-                self.moduels = {"createLink": self.createLink}
 
             def createLink(self,text,link):
                 return Template('''<a href="{{ link }}">{{ text }}</a>''').render(text=text,link=link)
@@ -365,20 +365,17 @@ class WebSite(object):
         ===================================
 
         """
+
+        extension = Extension(self.config.configs)
+
         if not isinstance(extension, object):
             raise TypeError("Extension must be a object.")
-
-        if not hasattr(extension, "modules"):
-            raise TypeError("Missing attribute: modules.")
-
-        if not isinstance(extension.moduels, dict):
-            raise TypeError("Modules must be a dict.")
 
         self.extensions_list.append(extension)
 
     def loader_resources(self):
         """
-        Load all static resources that have been added
+        Load all static resources that have been added.
 
         ===================================
         from bracket import WebSite
@@ -401,3 +398,34 @@ class WebSite(object):
             for resource in dispatch:
                 resources.append(resource)
         return resources
+    
+    def loader(self,o:dict):
+        """
+        Add context render object.
+
+        ===================================
+        from bracket import WebSite
+        from jinja2 import Template
+
+        app = WebSite(__name__)
+
+        @app.pages("/")
+        def hello(context):
+            return context({
+                "title":"Welcome!!!",
+                "content":Template('''<h1>Hello</h1>'''),
+                "resources":app.loader()
+            })
+        ===================================
+
+        """
+
+        extension_dict = {}
+
+        for ext in self.extensions_list:
+            extension_dict[ext.__name__] = ext
+        
+        for name,value in extension_dict.items():
+            o[name] = value
+        
+        return o
