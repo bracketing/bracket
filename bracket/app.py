@@ -307,8 +307,11 @@ class WebSite(object):
 
         try:
             os.mkdir(self.config.get("BUILD_OUTPUTDIR"))
+            os.mkdir(self.config.get("BUILD_OUTPUTDIR") + "/static")
         except:
             pass
+
+        staticlist = []
 
         for view in self.pages_list:
             static = self.dispatch(view["rule"])
@@ -324,8 +327,22 @@ class WebSite(object):
             
             with open(filepath, "w+", encoding="utf-8") as file:
                 file.write(str(static))
+        
+        for static in self.resources_list:
+            staticlist = staticlist + static(StaticContext).install_resources
 
-            print("Every thing was Ok.")
+        for static in staticlist:
+            filepath = self.config.get("BUILD_OUTPUTDIR") + "/static/" + static["filename"]
+
+            try:
+                os.mkdir(os.path.dirname(filepath))
+            except:
+                pass
+            
+            with open(filepath, "w+", encoding="utf-8") as file:
+                file.write(str(static["content"]))
+
+        print("Every thing was Ok.")
 
     def loader_extension(self, extension):
         """

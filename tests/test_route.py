@@ -51,4 +51,13 @@ def test_app_route():
             }
         )
 
+    @app.resources()
+    def resources(static):
+        return static([{
+            "filename":"link.txt",
+            "content":"bracket.ink"
+        }])
+
     return app
+
+    

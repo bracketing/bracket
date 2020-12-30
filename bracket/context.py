@@ -114,21 +114,3 @@ class RenderContext(object):
 class StaticContext(object):
     def __init__(self, install_resources):
         self.install_resources = install_resources
-
-    def install(self, name, resources):
-        if not self.isInstalled(name):
-            self.add(name, resources)
-        else:
-            raise NameError("Resource name is same.")
-
-    def add(self, name, resources):
-        self.install_resources[name] = resources
-
-    def isInstalled(self, name):
-        i = False
-        try:
-            self.install_resources[name]
-            i = True
-        except:
-            i = False
-        return i
