@@ -17,7 +17,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/bracketing/bracket/",
-    install_requires=["Jinja2>=2.10.1", "Werkzeug"],
+    install_requires=["Jinja2>=2.10.1"],
     license="MIT",
     classifiers=[
         "Programming Language :: Python :: 3",
